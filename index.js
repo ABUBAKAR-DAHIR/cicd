@@ -61,6 +61,6 @@ server.get("/upload-image" , (req , res) =>{
     res.send("working")
 })
 
-server.listen(PORT, () => {
+server.listen(PORT, "0.0.0.0", () => {
     console.log("Server started on 9000")
 })
