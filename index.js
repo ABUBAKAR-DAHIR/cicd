@@ -59,7 +59,7 @@ server.get("/upload-image" , (req , res) =>{
     // }
 
     const date = new Date()
-    const current = data.format("dd mm yyyy")
+    const current = date.format("dd-mm-yyyy")
 
     res.json({message: "working done by abubakar", date: current})
 })
