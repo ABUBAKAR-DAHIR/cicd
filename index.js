@@ -58,7 +58,10 @@ server.get("/upload-image" , (req , res) =>{
     //     return res.status(500).json({message : error})
     // }
 
-    res.send("working done by abubakar")
+    const date = new Date()
+    const current = data.format("dd mm yyyy")
+
+    res.json({message: "working done by abubakar", date: current})
 })
 
 server.listen(PORT, "0.0.0.0", () => {
