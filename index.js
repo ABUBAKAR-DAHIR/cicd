@@ -59,7 +59,14 @@ server.get("/upload-image" , (req , res) =>{
     // }
 
     const date = new Date()
-    const current = date.format("dd-mm-yyyy")
+
+    const day = String(date.getDate()).padStart(2, '0')
+    const month = String(date.getMonth() + 1).padStart(2, '0')
+    const year = date.getFullYear()
+
+    const current = `${day} ${month} ${year}`
+
+    console.log(current) // 22 03 2026
 
     res.json({message: "working done by abubakar", date: current})
 })
