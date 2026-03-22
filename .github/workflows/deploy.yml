@@ -12,10 +12,10 @@ jobs:
     steps:
       - name: Deploy to EC2
         run: |
-            echo "${{ secrets.EC2_SSH_KEY }}" > key.pem
+            echo "${{ secrets.SSH_KEY }}" > key.pem
             chmod 400 key.pem
 
-            ssh -o StrictHostKeyChecking=no -i key.pem ubuntu@${{ secrets.EC2_HOST }} << 'EOF'
+            ssh -o StrictHostKeyChecking=no -i key.pem ubuntu@${{ secrets.IP_HOST }} << 'EOF'
             cd cicd
             git pull origin main
             npm install
