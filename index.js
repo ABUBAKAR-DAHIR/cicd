@@ -58,10 +58,12 @@ server.get("/upload-image" , (req , res) =>{
     //     return res.status(500).json({message : error})
     // }
 
-    const date = new Date().toLocaleTimeString("en-IN", {
-        timeZone: "Asia/Kolkata",
-        hour12: false
-    })
+    // const date = new Date().toLocaleTimeString("en-IN", {
+    //     timeZone: "Asia/Kolkata",
+    //     hour12: false
+    // })
+
+    const date = new Date()
 
     const day = String(date.getDate()).padStart(2, '0')
     const month = String(date.getMonth() + 1).padStart(2, '0')
