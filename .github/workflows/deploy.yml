@@ -10,30 +10,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-
-      - name: Setup SSH
-        run: |
-          echo "${{ secrets.SSH_KEY }}" > key.pem
-          chmod 400 key.pem
-
       - name: Deploy to EC2
         run: |
-          ssh -o StrictHostKeyChecking=no -i key.pem ${{ secrets.IP_USER }}@${{ secrets.IP_HOST }} << 'EOF'
+            echo "${{ secrets.EC2_SSH_KEY }}" > key.pem
+            chmod 400 key.pem
 
-            cd ~/cicd
-
-            echo "📥 Pull latest code"
+            ssh -o StrictHostKeyChecking=no -i key.pem ubuntu@${{ secrets.EC2_HOST }} << 'EOF'
+            cd cicd
             git pull origin main
-
-            echo "📦 Install dependencies"
             npm install
-
-            echo "🚀 Restart server"
-            pm2 restart index
-
-            echo "💾 Save PM2"
-            pm2 save
-
-            echo "✅ Done"
-
-          EOF
+            npm run build
+            pm2 restart all
+            EOF
