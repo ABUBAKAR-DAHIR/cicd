@@ -1,0 +1,39 @@
+name: Deploy Backend to EC2
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Setup SSH
+        run: |
+          echo "${{ secrets.SSH_KEY }}" > key.pem
+          chmod 400 key.pem
+
+      - name: Deploy to EC2
+        run: |
+          ssh -o StrictHostKeyChecking=no -i key.pem ${{ secrets.IP_USER }}@${{ secrets.IP_HOST }} << 'EOF'
+
+            cd ~/cicd
+
+            echo "📥 Pull latest code"
+            git pull origin main
+
+            echo "📦 Install dependencies"
+            npm install
+
+            echo "🚀 Restart server"
+            pm2 restart index
+
+            echo "💾 Save PM2"
+            pm2 save
+
+            echo "✅ Done"
+
+          EOF
